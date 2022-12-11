@@ -3,4 +3,10 @@
     display: grid;
     place-items: center;
     background-color: var(--clr-white);
+    router-outlet{
+        display: none;
+    }
+    app-apartment-detail{
+        width: 100%;
+    }
 }
