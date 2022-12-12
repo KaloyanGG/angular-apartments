@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { MainRoutingModule } from './main/main-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ApartmentDetailComponent } from './apartment-detail/apartment-detail.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -25,7 +26,8 @@ import { ApartmentDetailComponent } from './apartment-detail/apartment-detail.co
   imports: [
     CommonModule,
     RouterModule,
-    MainRoutingModule
+    MainRoutingModule,
+    HttpClientModule
   ],
   exports:[
     NavigationComponent,

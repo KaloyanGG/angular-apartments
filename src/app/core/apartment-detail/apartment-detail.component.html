@@ -1,17 +1,16 @@
 <div class="apartment-info">
     <div class="info">
         <div class="text">
-            <h2>BRAND MODEL</h2>
-            <p>Construction year: </p>
-            <p>Type:</p>
-            <p>Number of rooms: </p>
-            <p>Price/day: </p>
-            <p>Available: </p>
+            <h2>{{apartment?.name}}</h2>
+            <p>City: {{apartment?.city}}</p>
+            <p>Number of rooms: {{apartment?.numberOfRooms}}</p>
+            <p>Price/day: {{apartment?.pricePerDay}}</p>
+            <p>Available: {{apartment?.available ? "Yes": "No"}}</p>
             <!-- {user && user.role === 'admin' && -->
-            <button onClick={editApartment}>Edit</button>
+            <!-- <button onClick={editApartment}>Edit</button> -->
             <!-- } -->
         </div>
-        <img src="https://picsum.photos/250/200" alt="None" />
+        <img src="{{apartment?.imageUrl}}" alt="None" />
     </div>
 
     <div class="comments">
