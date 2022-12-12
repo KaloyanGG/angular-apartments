@@ -16,7 +16,7 @@ const routes: Routes = [
         component: ApartmentsListComponent
     },
     {
-        path: 'apartment',
+        path: 'apartments/:id',
         component: ApartmentDetailComponent
     },
     {
