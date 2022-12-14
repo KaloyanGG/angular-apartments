@@ -1,1 +1,132 @@
-<p>profile works!</p>
+<div class="profile-card">
+    <div class="img-container">
+        <img [src]="user.imageUrl || 'https://www.shutterstock.com/image-vector/man-icon-vector-260nw-1040084344.jpg'" alt="profile-pic" class="profile-pic">
+    </div>
+    <form [formGroup]="form" action="" (ngSubmit)="saveProfile()">
+
+        <!-- {{form.get('username')?.errors | json}} -->
+        <!-- Username -->
+        <div class="flex">
+            <p>Username: </p>
+            <p>
+                <ng-container *ngIf="showEditMode">
+                    <input type="text" formControlName="username" [ngClass]="{'error': form.get('username')?.touched &&
+                    (form.get('username')?.errors?.['required'] || form.get('username')?.errors?.['minlength'])}"
+                        [placeholder]="
+                    form.get('username')?.touched ? (
+                    form.get('username')?.errors?.['required'] ? 'Username is required!':'')
+                   : ''
+                   ">
+
+                </ng-container>
+
+                <ng-container *ngIf="!showEditMode">
+                    {{user.username}}
+                </ng-container>
+            </p>
+        </div>
+
+        <!-- username ends -->
+
+        <!-- Full name -->
+        <div class="flex">
+            <p>Full name: </p>
+            <p>
+                <ng-container *ngIf="showEditMode">
+                    <input type="text" formControlName="name"[ngClass]="{'error': form.get('name')?.touched &&
+                    (form.get('name')?.errors?.['required'] || form.get('name')?.errors?.['minlength'])}"
+                        [placeholder]="
+                    form.get('name')?.touched ? (
+                    form.get('name')?.errors?.['required'] ? 'Name is required!':'')
+                   : ''
+                   ">
+
+                </ng-container>
+
+                <ng-container *ngIf="!showEditMode">
+                    {{user.name}}
+                </ng-container>
+            </p>
+        </div>
+
+
+        <!-- full name ends -->
+
+
+
+        <!-- Phone-->
+        <div class="flex">
+            <p>Phone: </p>
+            <p>
+                <ng-container *ngIf="showEditMode">
+                    <input formControlName="tel" type="text" name="tel" id="tel">
+                </ng-container>
+
+                <ng-container>
+                    <ng-container *ngIf="!showEditMode">
+                        {{user.tel}}
+                    </ng-container>
+                </ng-container>
+            </p>
+        </div>
+        <!-- Phone ends -->
+
+
+        <!-- Email -->
+        <div class="flex">
+            <p>Email: </p>
+
+            <p>
+                <ng-container *ngIf="showEditMode">
+                    <input type="text" formControlName="email" email="true" required="" [ngClass]="{'error': form.get('email')?.touched &&
+                         (form.get('email')?.errors?.['required'] || form.get('email')?.errors?.['email'])}"
+                        [placeholder]="
+                        form.get('email')?.touched ? (
+                        form.get('email')?.errors?.['required'] ? 'Email is required!':'')
+                       : ''
+                       ">
+                    <!-- <ng-container *ngIf="form.get('email')?.touched">
+                        <p class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
+                            Email is required!
+                        </p>
+                        <p class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
+                            Email is not valid!
+                        </p>
+                    </ng-container> -->
+                </ng-container>
+
+                <ng-container *ngIf="!showEditMode">
+                    {{user.email}}
+                </ng-container>
+            </p>
+        </div>
+        <!-- email ends -->
+        <!-- Image  -->
+        <div class="flex">
+            <p>Image url: </p>
+
+            <p>
+                <ng-container *ngIf="showEditMode">
+                    <input type="text" formControlName="imageUrl">
+                </ng-container>
+
+                <ng-container *ngIf="!showEditMode">
+                    {{user.imageUrl}}
+                </ng-container>
+            </p>
+        </div>
+
+        <div class="button-container">
+            <!-- image ends -->
+            <ng-template #edit>
+                <button class="edit-button" type="submit">Save</button>
+            </ng-template>
+            <ng-template #nonEdit>
+                <button class="edit-button" type="button" (click)="toggleEditMode()">Edit</button>
+            </ng-template>
+            <ng-container *ngTemplateOutlet="showEditMode ? edit : nonEdit"></ng-container>
+        </div>
+
+    </form>
+
+</div>

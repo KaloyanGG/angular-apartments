@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'environments/environment';
-import { IApartment } from './interfaces/apartment';
+import { IApartment } from './shared/interfaces/apartment';
 
 const apiURL = environment.apiURL;
 

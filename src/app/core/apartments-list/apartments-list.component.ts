@@ -1,6 +1,6 @@
 import { ApiService } from './../../api.service';
 import { Component, OnInit } from '@angular/core';
-import { IApartment } from 'src/app/interfaces/apartment';
+import { IApartment } from 'src/app/shared/interfaces/apartment';
 
 @Component({
   selector: 'app-apartments-list',
