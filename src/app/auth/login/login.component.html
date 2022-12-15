@@ -20,7 +20,7 @@
         <p class="field field-icon">
             <label for="password"><span>Password</span></label>
             <input type="password" ngModel #passwordInput="ngModel"
-             name="password" id="password" placeholder="******" required [minlength]="5">
+             name="password" id="password" placeholder="******" required [minlength]="6">
         </p>
         <ng-container *ngIf="passwordInput.touched">
 
@@ -28,18 +28,12 @@
                 Password is required!
             </p>
             <p class="error" *ngIf="passwordInput.errors?.['minlength']">
-                Password must be at least 5 characters!
+                Password must be at least 6 characters!
             </p>
         </ng-container>
 
         <button [disabled]="form.invalid">Login</button>
 
-        <p class="text-center">
-            Have an account?
-            <a href="#">Register</a>
-        </p>
-        {{emailInput.errors | json}}
-        {{passwordInput.errors | json}}
 
     </fieldset>
 </form>

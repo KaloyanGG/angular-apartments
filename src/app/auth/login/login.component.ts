@@ -22,16 +22,15 @@ export class LoginComponent {
   }
 
   loginHandler(form: NgForm): void {
-     console.log(form.value);
+    this.authService.login(form.value.email, form.value.password)
+      .then(() => {
+        const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+        this.router.navigate([returnUrl]);
+      })
+      .catch(err => {
+        alert(err.message);
+      });
 
-    if (form.invalid) { return; }
-    this.authService.user = {
-      username: 'John'
-    } as any;
-    console.log(this.authService.user);
 
-    const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
-
-    this.router.navigate([returnUrl]);
   }
 }

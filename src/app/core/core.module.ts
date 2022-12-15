@@ -9,7 +9,10 @@ import { RouterModule } from '@angular/router';
 import { MainRoutingModule } from './main/main-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ApartmentDetailComponent } from './apartment-detail/apartment-detail.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
+import { HomeChooserComponent } from './home-chooser/home-chooser.component';
+
 
 
 
@@ -21,7 +24,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ApartmentsListComponent,
     MainComponent,
     PageNotFoundComponent,
-    ApartmentDetailComponent
+    ApartmentDetailComponent,
+    HomeChooserComponent
   ],
   imports: [
     CommonModule,

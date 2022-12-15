@@ -5,16 +5,16 @@
                 <a routerLink="/apartments">Apartments</a>
             </li>
 
-            <li>
-                <a routerLink="/auth/myProfile">Rents/Coms/MyP</a>
+            <li *ngIf="!!(authService.user | async)">
+                <a routerLink="/auth/myProfile">My Profile</a>
             </li>
-            <li>
-                <a routerLink="/auth/logout">Logout</a>
+            <li *ngIf="!!(authService.user | async)">
+                <a (click)="logout()">Logout</a>
             </li>
-            <li>
+            <li *ngIf="!(authService.user | async)">
                 <a routerLink="/auth/login">Login</a>
             </li>
-            <li>
+            <li *ngIf="!(authService.user | async)">
                 <a routerLink="/auth/register">Register</a>
             </li>
         </ul>

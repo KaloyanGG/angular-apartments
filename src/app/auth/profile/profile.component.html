@@ -1,6 +1,7 @@
 <div class="profile-card">
     <div class="img-container">
-        <img [src]="user.imageUrl || 'https://www.shutterstock.com/image-vector/man-icon-vector-260nw-1040084344.jpg'" alt="profile-pic" class="profile-pic">
+        <img [src]="( authService.user | async )?.imageUrl  || 'https://www.shutterstock.com/image-vector/man-icon-vector-260nw-1040084344.jpg'"
+            alt="profile-pic" class="profile-pic">
     </div>
     <form [formGroup]="form" action="" (ngSubmit)="saveProfile()">
 
@@ -21,7 +22,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="!showEditMode">
-                    {{user.username}}
+                    {{( authService.user | async )?.username }}
                 </ng-container>
             </p>
         </div>
@@ -33,7 +34,7 @@
             <p>Full name: </p>
             <p>
                 <ng-container *ngIf="showEditMode">
-                    <input type="text" formControlName="name"[ngClass]="{'error': form.get('name')?.touched &&
+                    <input type="text" formControlName="name" [ngClass]="{'error': form.get('name')?.touched &&
                     (form.get('name')?.errors?.['required'] || form.get('name')?.errors?.['minlength'])}"
                         [placeholder]="
                     form.get('name')?.touched ? (
@@ -44,7 +45,8 @@
                 </ng-container>
 
                 <ng-container *ngIf="!showEditMode">
-                    {{user.name}}
+                    <!-- {{user.name}} -->
+                    {{( authService.user | async )?.name }}
                 </ng-container>
             </p>
         </div>
@@ -64,7 +66,7 @@
 
                 <ng-container>
                     <ng-container *ngIf="!showEditMode">
-                        {{user.tel}}
+                        {{( authService.user | async )?.tel }}
                     </ng-container>
                 </ng-container>
             </p>
@@ -96,7 +98,8 @@
                 </ng-container>
 
                 <ng-container *ngIf="!showEditMode">
-                    {{user.email}}
+                    <!-- {{user.email}} -->
+                    {{( authService.user | async )?.email }}
                 </ng-container>
             </p>
         </div>
@@ -111,7 +114,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="!showEditMode">
-                    {{user.imageUrl}}
+                    <!-- {{user.imageUrl | shorten : 20}} -->
                 </ng-container>
             </p>
         </div>

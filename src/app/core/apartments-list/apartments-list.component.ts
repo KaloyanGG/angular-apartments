@@ -11,18 +11,10 @@ export class ApartmentsListComponent implements OnInit {
 
   apartmentsList: IApartment[] | null = null;
   errorFetchingData = false;
-  constructor(private apiService: ApiService) { }
+  constructor(public apiService: ApiService) { }
 
   ngOnInit() {
-    this.apiService.loadApartments().subscribe(({
-      next: (value) => {
-        this.apartmentsList = value;
-      },
-      error: (error) => {
-        this.errorFetchingData = true;
-        console.log(error);
-      }
-    }));
+    // this.apiService.loadApartments()
   }
 
 }

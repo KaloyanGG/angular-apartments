@@ -1,3 +1,4 @@
+import { IUser } from './../../shared/interfaces/user';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
@@ -11,18 +12,18 @@ export class ProfileComponent {
 
   showEditMode = false;
 
-  get user() {
-    const { username, email, tel, name, imageUrl } = this.authService.user!;
-    return {
-      username,
-      email,
-      tel,
-      name,
-      imageUrl
+  // get user() {
+  //   const { username, email, tel, name, imageUrl } = this.authService.user!;
+  //   return {
+  //     username,
+  //     email,
+  //     tel,
+  //     name,
+  //     imageUrl
 
-    }
-  }
-
+  //   }
+  // }
+  user: IUser = {} as any;
 
   form = this.fb.group({
     username: [this.user.username, [Validators.required, Validators.minLength(5)]],
@@ -30,10 +31,16 @@ export class ProfileComponent {
     tel: [this.user.tel],
     name: [this.user.name, [Validators.required, Validators.minLength(5)]],
     imageUrl: [this.user.imageUrl]
-  });
+  }); 
 
   constructor(private fb: FormBuilder, public authService: AuthService) {
+    this.authService.user.subscribe(user => {
+      // this.form.setValue(
+      //   user as any
+      // );
+      this.user = user as any;
 
+    });
   }
 
 
