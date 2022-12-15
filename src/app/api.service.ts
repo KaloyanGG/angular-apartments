@@ -1,10 +1,10 @@
-import { Firestore, collection, query, setDoc, doc } from '@angular/fire/firestore';
+import { Firestore, collection, query, setDoc, doc, getDoc } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'environments/environment';
 import { IApartment } from './shared/interfaces/apartment';
 import { getDocs } from '@firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter, map } from 'rxjs';
 
 const apiURL = environment.apiURL;
 
@@ -17,13 +17,12 @@ export class ApiService {
     this.loadApartments();
   }
   apartments: BehaviorSubject<IApartment[]> = new BehaviorSubject<IApartment[]>([]);
+  apartment: BehaviorSubject<IApartment> = new BehaviorSubject<IApartment>({} as IApartment);
 
   loadApartments() {
     getDocs(query(collection(this.afs, 'apartments'))).then((querySnapshot) => {
       const aps: IApartment[] = [];
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
         aps.push(doc.data() as IApartment);
       });
       console.log(aps);
@@ -32,7 +31,7 @@ export class ApiService {
 
     // return this.httpClient.get<IApartment[]>(`${apiURL}/apartments`);
   }
-  
+
   //add the apartments array to the firestore
   addApartments(apartments: IApartment[]) {
     console.log(apartments);
@@ -41,9 +40,16 @@ export class ApiService {
     });
   }
 
-
-  loadApartment(id: number) {
-    return this.httpClient.get<IApartment>(`${apiURL}/apartments/${id}`);
+//TODO: use promise
+  loadApartment(id: number): void {
+    let apart: IApartment = {} as IApartment;
+    this.apartments.pipe(map((aps) => {
+      return aps.find((ap) => ap.id === id);
+    })).subscribe((apartment) => {
+      this.apartment.next(apartment as IApartment);
+      console.log('apartment.value: ');
+      console.log(this.apartment.value);
+    });
   }
 
   // loadPosts(limit?: number) {

@@ -12,17 +12,6 @@ export class ProfileComponent {
 
   showEditMode = false;
 
-  // get user() {
-  //   const { username, email, tel, name, imageUrl } = this.authService.user!;
-  //   return {
-  //     username,
-  //     email,
-  //     tel,
-  //     name,
-  //     imageUrl
-
-  //   }
-  // }
   user: IUser = {} as any;
 
   form = this.fb.group({

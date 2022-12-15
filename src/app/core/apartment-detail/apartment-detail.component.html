@@ -1,7 +1,7 @@
 <div class="apartment-info">
     <div class="info">
         <div class="text">
-            <h2>{{apartment?.name}}</h2>
+            <h2>Name: {{(apiService.apartment | async )?.name }}</h2>
             <p>City: {{apartment?.city}}</p>
             <p>Number of rooms: {{apartment?.numberOfRooms}}</p>
             <p>Price/day: {{apartment?.pricePerDay}}</p>

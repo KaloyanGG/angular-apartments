@@ -12,20 +12,21 @@ export class ApartmentDetailComponent implements OnInit {
 
   apartment: IApartment | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {
+  constructor(private route: ActivatedRoute, public apiService: ApiService) {
     // this.route.params.subscribe(console.log);
+    this.apiService.loadApartment(3);
   }
 
   ngOnInit() {
-    this.apiService.loadApartment(this.route.snapshot.params['id']).subscribe(({
-      next: (value) => {
-        this.apartment = value;
-        console.log(this.apartment);
-      },
-      error: (error) => {
-        console.log(error);
-        console.log(this.route);
-      }
-    }));
+    // this.apiService.loadApartment(this.route.snapshot.params['id']).subscribe(({
+    //   next: (value) => {
+    //     this.apartment = value;
+    //     console.log(this.apartment);
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //     console.log(this.route);
+    //   }
+    // }));
   }
 }
