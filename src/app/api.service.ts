@@ -25,7 +25,7 @@ export class ApiService {
       querySnapshot.forEach((doc) => {
         aps.push(doc.data() as IApartment);
       });
-      console.log(aps);
+      // console.log(aps);
       this.apartments.next(aps);
     });
 
@@ -34,7 +34,6 @@ export class ApiService {
 
   //add the apartments array to the firestore
   addApartments(apartments: IApartment[]) {
-    console.log(apartments);
     apartments.forEach((apartment) => {
       setDoc(doc(this.afs, 'apartments', apartment.id.toString()), apartment)
     });
@@ -47,8 +46,6 @@ export class ApiService {
       return aps.find((ap) => ap.id === id);
     })).subscribe((apartment) => {
       this.apartment.next(apartment as IApartment);
-      console.log('apartment.value: ');
-      console.log(this.apartment.value);
     });
   }
 

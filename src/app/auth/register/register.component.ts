@@ -15,6 +15,7 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     tel: ['', [Validators.minLength(5)]],
     name: ['', [Validators.required, Validators.minLength(5)]],
+    imageUrl: [''],
     pass: this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       rePassword: []

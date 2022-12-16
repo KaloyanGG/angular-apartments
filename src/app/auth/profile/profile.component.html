@@ -114,7 +114,10 @@
                 </ng-container>
 
                 <ng-container *ngIf="!showEditMode">
-                    <!-- {{user.imageUrl | shorten : 20}} -->
+
+                    {{( authService.user | async )?.imageUrl | shorten : 20}}
+
+
                 </ng-container>
             </p>
         </div>

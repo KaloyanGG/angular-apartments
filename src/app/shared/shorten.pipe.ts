@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ShortenPipe implements PipeTransform {
 
-  transform(value: string, maxCount = 10): unknown {
+  transform(value: string | undefined, maxCount = 10): unknown {
+    
+    if (!value) {
+      return '';
+    }
     return `${value.substring(0,maxCount)}${value.length > maxCount ? '...' : ''}`;
   }
 

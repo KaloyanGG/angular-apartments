@@ -15,7 +15,7 @@ import { BehaviorSubject } from 'rxjs';
   }
 )
 export class AuthService {
-  
+
   public user = new BehaviorSubject<undefined | null | IUser>(null);
 
   constructor(public afs: Firestore, public afAuth: Auth, public router: Router) {
@@ -27,11 +27,11 @@ export class AuthService {
           }
         });
 
-      }else{
+      } else {
         this.user.next(null);
       }
     });
-    
+
 
   }
 
@@ -50,13 +50,12 @@ export class AuthService {
     return signInWithEmailAndPassword(this.afAuth, email, password)
       .then((result) => {
         this.setUserData(result.user);
-        console.log('User logged in: ', result.user);
       })
       .catch((error) => {
-        if(error.code === 'auth/user-not-found'){
+        if (error.code === 'auth/user-not-found') {
           throw new Error('User not found');
         }
-        if(error.code === 'auth/wrong-password'){
+        if (error.code === 'auth/wrong-password') {
           throw new Error('Wrong password');
         }
 
@@ -70,6 +69,7 @@ export class AuthService {
           email: user.email,
           id: result.user.uid,
           username: user.username,
+          imageUrl: user.imageUrl,
           name: user.name,
           tel: user.tel
 
@@ -81,6 +81,20 @@ export class AuthService {
       .catch((error) => {
         window.alert(error.message);
       });
+  }
+
+  updateProfile(user: IUser) {
+    this.user.subscribe((u) => {
+      if (u) {
+        user.id = u.id;
+      } else {
+        return;
+      }
+      setDoc(doc(this.afs, 'users', user.id), user);
+      this.setUserData(user);
+    });
+
+
   }
 
   logout() {

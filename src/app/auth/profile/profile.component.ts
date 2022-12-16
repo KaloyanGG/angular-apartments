@@ -14,13 +14,7 @@ export class ProfileComponent {
 
   user: IUser = {} as any;
 
-  form = this.fb.group({
-    username: [this.user.username, [Validators.required, Validators.minLength(5)]],
-    email: [this.user.email, [Validators.required, Validators.email]],
-    tel: [this.user.tel],
-    name: [this.user.name, [Validators.required, Validators.minLength(5)]],
-    imageUrl: [this.user.imageUrl]
-  }); 
+  form = {} as any; 
 
   constructor(private fb: FormBuilder, public authService: AuthService) {
     this.authService.user.subscribe(user => {
@@ -28,10 +22,15 @@ export class ProfileComponent {
       //   user as any
       // );
       this.user = user as any;
-
+      this.form = this.fb.group({
+        username: [this.user.username, [Validators.required, Validators.minLength(5)]],
+        email: [this.user.email, [Validators.required, Validators.email]],
+        tel: [this.user.tel],
+        name: [this.user.name, [Validators.required, Validators.minLength(5)]],
+        imageUrl: [this.user.imageUrl]
+      }); 
     });
   }
-
 
   toggleEditMode(): void {
     this.showEditMode = !this.showEditMode;
@@ -41,10 +40,11 @@ export class ProfileComponent {
   saveProfile(): void {
     if (this.form.invalid) { return; }
     const { username, email, tel, name, imageUrl } = this.form.value;
-    this.authService.user = {
-      username, email, tel, name, imageUrl
-    } as any;
-    console.log(this.form.value);
+    // this.authService.user = {
+    //   username, email, tel, name, imageUrl
+    // } as any;
+    // console.log(this.form.value);
+    this.authService.updateProfile(this.form.value as any);
     this.toggleEditMode();
   }
 
