@@ -12,6 +12,7 @@ import { ApartmentDetailComponent } from './apartment-detail/apartment-detail.co
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { HomeChooserComponent } from './home-chooser/home-chooser.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -31,7 +32,8 @@ import { HomeChooserComponent } from './home-chooser/home-chooser.component';
     CommonModule,
     RouterModule,
     MainRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports:[
     NavigationComponent,

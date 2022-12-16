@@ -1,54 +1,54 @@
 <div class="apartment-info">
     <div class="info">
         <div class="text">
-            <h2>Name: {{(apiService.apartment | async )?.name }}</h2>
-            <p>City: {{apartment?.city}}</p>
-            <p>Number of rooms: {{apartment?.numberOfRooms}}</p>
-            <p>Price/day: {{apartment?.pricePerDay}}</p>
-            <p>Available: {{apartment?.available ? "Yes": "No"}}</p>
-            <!-- {user && user.role === 'admin' && -->
-            <!-- <button onClick={editApartment}>Edit</button> -->
-            <!-- } -->
+            <h2> {{(apiService.apartment | async )?.name }}</h2>
+            <p>{{(apiService.apartment | async )?.city }}</p>
+            <p>Number of rooms: {{(apiService.apartment | async )?.numberOfRooms }}</p>
+            <p>Price/day: {{(apiService.apartment | async )?.pricePerDay }}</p>
+            <p>Available: {{(apiService.apartment | async )?.name ? "Yes": "No"}}</p>
         </div>
-        <img src="{{apartment?.imageUrl}}" alt="None" />
+        <img src="{{(apiService.apartment | async )?.imageUrl }}" alt="None" />
     </div>
 
     <div class="comments">
-        <form class="add-comment" action="">
+        <form class="add-comment" [formGroup]="form" (ngSubmit)="onCommentAdd()">
             <label for="comment">Add comment:</label>
-            <input type="text">
-            <button>SUBMIT</button>
+            <input type="text" formControlName="commentContent">
+            <button>ADD</button>
         </form>
-    <div class="comment">
-        <div class="comment-info">
-            <div class="comment-text">
-                <h3>Username</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, minus placeat. Pariatur
-                    impedit excepturi fuga quasi natus repellat, vel esse?</p>
+
+
+        <div *ngFor="let c of commentsArray" class="comment">
+            <div class="comment-info">
+                <div class="comment-text">
+                    <h3>{{c.username}}</h3>
+                    <p>{{c.content}}</p>
+                </div>
             </div>
         </div>
 
-    </div>
-    <div class="comment">
-        <div class="comment-info">
-            <div class="comment-text">
-                <h3>Username</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, doloremque corporis aspernatur a
-                    in quod eaque laborum commodi deleniti assumenda.</p>
-            </div>
-        </div>
+<!-- 
 
-    </div>
-    <div class="comment">
-        <div class="comment-info">
-            <div class="comment-text">
-                <h3>Username</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, doloremque corporis aspernatur a
-                    in quod eaque laborum commodi deleniti assumenda.</p>
+        <div class="comment">
+            <div class="comment-info">
+                <div class="comment-text">
+                    <h3>Username</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, doloremque corporis aspernatur a
+                        in quod eaque laborum commodi deleniti assumenda.</p>
+                </div>
             </div>
-        </div>
 
+        </div>
+        <div class="comment">
+            <div class="comment-info">
+                <div class="comment-text">
+                    <h3>Username</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, doloremque corporis aspernatur a
+                        in quod eaque laborum commodi deleniti assumenda.</p>
+                </div>
+            </div>
+
+        </div> -->
     </div>
-</div>
 
 </div>

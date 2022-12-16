@@ -79,28 +79,11 @@
             <p>Email: </p>
 
             <p>
-                <ng-container *ngIf="showEditMode">
-                    <input type="text" formControlName="email" email="true" required="" [ngClass]="{'error': form.get('email')?.touched &&
-                         (form.get('email')?.errors?.['required'] || form.get('email')?.errors?.['email'])}"
-                        [placeholder]="
-                        form.get('email')?.touched ? (
-                        form.get('email')?.errors?.['required'] ? 'Email is required!':'')
-                       : ''
-                       ">
-                    <!-- <ng-container *ngIf="form.get('email')?.touched">
-                        <p class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
-                            Email is required!
-                        </p>
-                        <p class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
-                            Email is not valid!
-                        </p>
-                    </ng-container> -->
-                </ng-container>
 
-                <ng-container *ngIf="!showEditMode">
-                    <!-- {{user.email}} -->
+
+            
                     {{( authService.user | async )?.email }}
-                </ng-container>
+               
             </p>
         </div>
         <!-- email ends -->

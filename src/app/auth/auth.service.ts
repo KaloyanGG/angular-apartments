@@ -32,16 +32,16 @@ export class AuthService {
       }
     });
 
+    //TODO: why after edit user, we go to apartments?
 
   }
 
   setUserData(user: any) {
-    getDoc(doc(this.afs, 'users', user.uid)).then((doc) => {
+    getDoc(doc(this.afs, 'users', user.id)).then((doc) => {
       if (doc.exists()) {
         this.user.next(doc.data() as IUser);
       }
     });
-
   }
 
 
@@ -87,14 +87,15 @@ export class AuthService {
     this.user.subscribe((u) => {
       if (u) {
         user.id = u.id;
+        user.email = u.email;
       } else {
         return;
       }
-      setDoc(doc(this.afs, 'users', user.id), user);
+    })
+
+    const docInst = setDoc(doc(this.afs, 'users', user.id ), user).then(() => {
       this.setUserData(user);
     });
-
-
   }
 
   logout() {
@@ -103,7 +104,5 @@ export class AuthService {
     });
 
   }
-
-
 
 }
