@@ -1,11 +1,12 @@
 import { AuthService } from 'src/app/auth/auth.service';
-import { Firestore, collection, query, setDoc, doc, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, query, setDoc, doc, addDoc, deleteDoc, where, onSnapshot, collectionData } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { IApartment } from './shared/interfaces/apartment';
 import { getDocs } from '@firebase/firestore';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, bindCallback, map, Observable, of } from 'rxjs';
 import { IComment } from './shared/interfaces/comment';
+import { IRental } from './shared/interfaces/rental';
 
 // const apiURL = environment.apiURL;
 
@@ -18,10 +19,11 @@ export class ApiService {
     private afs: Firestore,
     private authService: AuthService) {
     this.loadApartments();
-    this.loadAllComments();
+    // this.loadApartmentComments();
   }
   apartments: BehaviorSubject<IApartment[]> = new BehaviorSubject<IApartment[]>([]);
-  allComments: BehaviorSubject<IComment[]> = new BehaviorSubject<IComment[]>([]);
+  // allComments: BehaviorSubject<IComment[]> = new BehaviorSubject<IComment[]>([]);
+  allRentals: BehaviorSubject<IRental[]> = new BehaviorSubject<IRental[]>([]);
   apartment: BehaviorSubject<IApartment> = new BehaviorSubject<IApartment>({} as IApartment);
   currentComments: BehaviorSubject<IComment[]> = new BehaviorSubject<IComment[]>([]);
 
@@ -35,13 +37,20 @@ export class ApiService {
     });
 
   }
-  loadAllComments() {
-    getDocs(query(collection(this.afs, 'comments'))).then((querySnapshot) => {
-      const comments: IComment[] = [];
+
+  getApartmentComments(apartmentId: number) {
+    return collectionData(query(collection(this.afs, 'comments'), where('apartmentId', '==', apartmentId)));
+  }
+
+  loadAllRentals() {
+    getDocs(query(collection(this.afs, 'rentals'))).then((querySnapshot) => {
+      const rentals: IRental[] = [];
       querySnapshot.forEach((doc) => {
-        comments.push(doc.data() as IComment);
+        rentals.push({ ...doc.data(), id: doc.id } as IRental);
       });
-      this.allComments.next(comments);
+      this.allRentals.next(rentals);
+      // console.log(rentals);
+
     });
 
   }
@@ -56,8 +65,12 @@ export class ApiService {
       setDoc(doc(this.afs, 'comments', comment.id), comment)
     });
   }
+  addRentals(rentals: IRental[]) {
+    rentals.forEach((rental) => {
+      setDoc(doc(this.afs, 'rentals', rental.id), rental)
+    });
+  }
 
-  //TODO: use promise
   loadApartment(id: number): void {
     let apart: IApartment = {} as IApartment;
     this.apartments.pipe(map((aps) => {
@@ -67,37 +80,60 @@ export class ApiService {
     });
   }
 
-  loadCommentsOfApartment(apartmentId: number) {
-    this.allComments.pipe(map((coms) => {
-      return coms.filter((com) => com.apartmentId === apartmentId);
-    })).subscribe((coms) => {
-      this.currentComments.next(coms);
+  // loadCommentsOfApartment(apartmentId: number) {
+  //   this.allComments.pipe(map((coms) => {
+  //     return coms.filter((com) => com.apartmentId === apartmentId);
+  //   })).subscribe((coms) => {
+  //     this.currentComments.next(coms);
 
+  //   });
+  //   // this.currentComments.subscribe((coms) => {
+  //   //   console.log('all comments for this ap: ');
+  //   //   console.log(coms);
+  //   // })
+
+  // }
+
+  addComment(content: string) {
+
+    addDoc(collection(this.afs, 'comments'), {
+      content,
+      userId: this.authService.user.value?.id,
+      apartmentId: this.apartment.value.id,
+      date: new Date()
     });
-    // this.currentComments.subscribe((coms) => {
-    //   console.log('all comments for this ap: ');
-    //   console.log(coms);
-    // })
+
 
   }
 
-  addComment(content: string) {
-    this.authService.user.subscribe((user) => {
-      addDoc(collection(this.afs, 'comments'), {
-        content, userId: user?.id, apartmentId: this.apartment.value.id, date: new Date()
-      }).then(() => {
+  rentApartment(id: number) {
+    addDoc(collection(this.afs, 'rentals'), {
+      apartmentId: id,
+      userId: this.authService.user.value?.id,
+      startDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
+    }).then(() => {
+      setDoc(doc(this.afs, 'apartments', id.toString()), { available: false }, { merge: true })
+        .then(() => {
+          this.loadApartments();
+          this.loadAllRentals();
+        });
 
-        this.loadAllComments();
-        // this.loadCommentsOfApartment(this.apartment.value.id);
+    });
+  }
 
-      });
+  unrent(rentId: string, apartmentId: number) {
+    // console.log(rentId);
+    deleteDoc(doc(this.afs, 'rentals', rentId)).then(() => {
+      this.loadAllRentals();
+    }).then(() => {
+      setDoc(doc(this.afs, 'apartments', apartmentId.toString()), { available: true }, { merge: true })
+        .then(() => {
+          this.loadApartments();
+        });
+    }
 
-    }).unsubscribe();
-    //TODO? ZASHTO DWA PUTI GI RENDERIRA
-
-
-
-
+    );
   }
 
 }
+

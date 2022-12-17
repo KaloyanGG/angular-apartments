@@ -119,16 +119,35 @@ export class MainComponent {
       "content": "Comment made by user 3 on apartment 3 with Apartment id 3"
 
     }
-
+  ];
+  rentsArray = [
+    {
+      "id": "1",
+      "apartmentId": 1,
+      "userId": "1nrj3nhZsSdqQgrYg2bbsmLXmCG2",
+      "startDate": "2021-10-10"
+    },
+    {
+      "id": "2",
+      "apartmentId": 4,
+      "userId": "1nrj3nhZsSdqQgrYg2bbsmLXmCG2",
+      "startDate": "2020-10-10"
+    },
+    {
+      "id": "3",
+      "apartmentId": 2,
+      "userId": "c3Am3eWEwSZre0fKqtJXHJcVmX62",
+      "startDate": "2021-10-10"
+    }
 
   ];
   clickButtonHandler() {
+    // this.apiService.addRentals(this.rentsArray);
     // this.apiService.addComments(this.commentsArray);
 
     // this.apiService.addApartments(this.apsArray);
     // this.apiService.loadApartment(3);
   }
 
-  //TODO: Why Cannot read properties of undefined (reading 'indexOf') when registering
 
 }
