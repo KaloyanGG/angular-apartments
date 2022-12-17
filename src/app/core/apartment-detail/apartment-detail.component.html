@@ -5,7 +5,7 @@
             <p>{{(apiService.apartment | async )?.city }}</p>
             <p>Number of rooms: {{(apiService.apartment | async )?.numberOfRooms }}</p>
             <p>Price/day: {{(apiService.apartment | async )?.pricePerDay }}</p>
-            <p>Available: {{(apiService.apartment | async )?.name ? "Yes": "No"}}</p>
+            <p>Available: {{(apiService.apartment | async )?.available ? "Yes": "No"}}</p>
         </div>
         <img src="{{(apiService.apartment | async )?.imageUrl }}" alt="None" />
     </div>

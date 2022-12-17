@@ -10,9 +10,8 @@ import { MainRoutingModule } from './main/main-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ApartmentDetailComponent } from './apartment-detail/apartment-detail.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
-import { HomeChooserComponent } from './home-chooser/home-chooser.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RentalsComponent } from './rentals/rentals.component';
 
 
 
@@ -26,7 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MainComponent,
     PageNotFoundComponent,
     ApartmentDetailComponent,
-    HomeChooserComponent
+    RentalsComponent
   ],
   imports: [
     CommonModule,

@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { doc, DocumentData, Firestore, getDoc } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Validators, FormBuilder } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -12,45 +13,29 @@ import { Validators, FormBuilder } from '@angular/forms';
 })
 export class ApartmentDetailComponent implements OnDestroy {
 
-  // commentsWithUserName: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  public commentsWithUserName = new BehaviorSubject<any[]>([]);
   public commentsArray: any[] = [];
+  public commentsSub: Subscription;
 
   form = this.fb.group({
     commentContent: ['', [Validators.required, Validators.minLength(10)]],
-  });
-
+  }); 
+ 
 
   constructor(private route: ActivatedRoute, public apiService: ApiService,
-    private afs: Firestore, private fb: FormBuilder) {
+    private afs: Firestore, private fb: FormBuilder, private authService:AuthService) {
 
     this.apiService.loadApartment(Number(route.snapshot.params['id']));
-    this.apiService.loadCommentsOfApartment(Number(route.snapshot.params['id']));
-    this.apiService.currentComments.subscribe(comments => {
-      // Everything is allright here
-      // console.log('comments');
-      // console.log(comments);
-      //TODO: After logging out and in, the comments are shown 2 times
-      this.commentsArray = []; 
-      comments.forEach(comment => {
-        getDoc(doc(this.afs, 'users', comment.userId)).then((doc) => {
-          this.commentsArray.push({ ...comment, username: doc.data()?.['username'] });
+    this.commentsSub = this.apiService.getApartmentComments(Number(route.snapshot.params['id']))
+      .subscribe(comments => {
+        this.commentsArray = [];
+        comments.forEach(comment => {
+          getDoc(doc(this.afs, 'users', comment['userId'])).then((doc) => {
+            this.commentsArray.push({ ...comment, username: doc.data()?.['username'] });
+          })
 
-          this.commentsWithUserName.next(this.commentsArray);
-        })
+        });
 
       });
- 
-    });
-
-    // this.commentsWithUserName.subscribe(comms => {
-    //   console.log('comsArray')
-    //   console.log(this.commentsArray);
-    // });
-    //TODO: why happens 2 times?
-
-    //TODO: Hide add comment button if user is not logged in
-
   }
 
 
@@ -64,14 +49,19 @@ export class ApartmentDetailComponent implements OnDestroy {
       return;
     }
 
+        
+    if(this.authService.user.value === null) {
+      alert('You must be logged in to rent an apartment!');
+      return;
+    }
+
     this.apiService.addComment(this.form.value.commentContent as any);
-    this.commentsArray = [];
     this.form.reset();
   }
 
   ngOnDestroy(): void {
     this.commentsArray = [];
-    this.commentsWithUserName.next([]);
+    this.commentsSub.unsubscribe();
   }
 
 

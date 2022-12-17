@@ -27,7 +27,6 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   registerHandler() {
-    // this.authService.register(this.form.value as IUser);
     this.authService.register({
       ...this.form.value,
       password: this.form.value.pass?.password

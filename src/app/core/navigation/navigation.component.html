@@ -4,6 +4,9 @@
             <li>
                 <a routerLink="/apartments">Apartments</a>
             </li>
+            <li>
+                <a routerLink="/rentals">Rentals</a>
+            </li>
 
             <li *ngIf="!!(authService.user | async)">
                 <a routerLink="/auth/myProfile">My Profile</a>

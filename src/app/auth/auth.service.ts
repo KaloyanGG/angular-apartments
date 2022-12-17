@@ -32,7 +32,6 @@ export class AuthService {
       }
     });
 
-    //TODO: why after edit user, we go to apartments?
 
   }
 
@@ -74,35 +73,28 @@ export class AuthService {
           tel: user.tel
 
         })
-        // collection(this.afs, `users/${result.user?.uid}`).firestore.;
-        this.setUserData(user);
-        // this.router.navigate(['dashboard']);
+        // this.setUserData(user);
       })
       .catch((error) => {
+        console.error(error.message);
         window.alert(error.message);
       });
   }
 
   updateProfile(user: IUser) {
-    this.user.subscribe((u) => {
-      if (u) {
-        user.id = u.id;
-        user.email = u.email;
-      } else {
-        return;
-      }
-    })
+    user.id = this.user.value?.id as string;
+    user.email = this.user.value?.email as string;
 
-    const docInst = setDoc(doc(this.afs, 'users', user.id ), user).then(() => {
-      this.setUserData(user);
+    setDoc(doc(this.afs, 'users', user.id), user).then(() => {
+      this.user.next(user);
     });
+
   }
 
   logout() {
     signOut(this.afAuth).then(() => {
       this.router.navigate(['/']);
     });
-
   }
 
 }

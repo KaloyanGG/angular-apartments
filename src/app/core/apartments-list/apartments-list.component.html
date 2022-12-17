@@ -9,14 +9,23 @@
         <div class="info">
             <h2>{{ap.name}}</h2>
             <h3>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>
-                {{ap.city}}</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path
+                        d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
+                </svg>
+                {{ap.city}}
+            </h3>
 
         </div>
         <div class='buttons'>
-            <button>
+            <button *ngIf="!ap.available" disabled>
+                Rented
+            </button>
+            <button *ngIf="ap.available" (click)="rentApartment(ap.id)">
                 Rent
             </button>
+
             <button [routerLink]="['/apartments/'+ap.id]">
                 Details
             </button>
@@ -25,67 +34,7 @@
         <img src="{{ap.imageUrl}}" alt="None" />
 
     </div>
-    <!-- <div class="apartment-card">
-        <div class="info">
-            <h2>Brand</h2>
-            <h3>Model</h3>
 
-        </div>
-        <div class='buttons'>
-            <button>
-                Rent
-            </button>
-            <button>
-                Details
-            </button>
-            <button>
-                Delete
-            </button>
 
-        </div>
-        <img src="https://picsum.photos/200" alt="None" />
 
-    </div>
-    <div class="apartment-card">
-        <div class="info">
-            <h2>Brand</h2>
-            <h3>Model</h3>
-
-        </div>
-        <div class='buttons'>
-            <button>
-                Rent
-            </button>
-            <button>
-                Details
-            </button>
-            <button>
-                Delete
-            </button>
-
-        </div>
-        <img src="https://picsum.photos/200" alt="None" />
-
-    </div>
-    <div class="apartment-card">
-        <div class="info">
-            <h2>Brand</h2>
-            <h3>Model</h3>
-
-        </div>
-        <div class='buttons'>
-            <button>
-                Rent
-            </button>
-            <button>
-                Details
-            </button>
-            <button>
-                Delete
-            </button>
-
-        </div>
-        <img src="https://picsum.photos/200" alt="None" />
-
-    </div> -->
 </div>

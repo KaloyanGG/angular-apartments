@@ -9,19 +9,19 @@ import { AuthService } from '../auth/auth.service';
 export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {
-    
+
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-   
-      return this.authService.user.pipe(take(1), map(user => !!user), tap(isAuthenticated  =>{
-        if(!isAuthenticated){
-          this.router.navigate(['/auth/login']);  
-        }
-      }) );
-  
-    }
-  
+
+    return this.authService.user.pipe(take(1), map(user => !!user), tap(isAuthenticated => {
+      if (!isAuthenticated) {
+        this.router.navigate(['/auth/login']);
+      }
+    })); 
+
+  }
+
 }

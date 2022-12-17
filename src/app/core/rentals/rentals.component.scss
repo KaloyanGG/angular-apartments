@@ -1,0 +1,37 @@
+.rentals {
+    width: 80vw;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container {
+        width: 70%;
+        height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .rental {
+            width: 100%;
+            display: flex;
+            position: relative;
+            gap: 1rem;
+            button{
+                position: absolute;
+                width: 50px;
+                right: 0;
+                transform: translateX(120%);
+                font-size: 12px;
+            }
+
+            * {
+                width: 100%;
+            }
+  
+        }
+
+
+    }
+}

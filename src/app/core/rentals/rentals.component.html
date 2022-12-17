@@ -1,0 +1,18 @@
+<div class="rentals">
+    <div class="container">
+        <div class="rental">
+            <p>Start date</p>
+            <p>Apartment ID</p>
+            <p>Customer ID</p>
+        </div> 
+
+        <div *ngFor="let r of (apiService.allRentals | async)" class="rental" >
+
+            <p>{{r.startDate}}</p>
+            <p>{{r.apartmentId}}</p>
+            <p>{{r.userId}}</p>
+            <button *ngIf="r.userId == (authService.user | async)?.id" (click)="unrent(r.id, r.apartmentId)">Unrent</button>
+        </div>
+
+    </div>
+</div>

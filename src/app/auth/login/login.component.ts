@@ -24,8 +24,7 @@ export class LoginComponent {
   loginHandler(form: NgForm): void {
     this.authService.login(form.value.email, form.value.password)
       .then(() => {
-        const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
-        this.router.navigate([returnUrl]);
+        this.router.navigate(['/apartments']);
       })
       .catch(err => {
         alert(err.message);
