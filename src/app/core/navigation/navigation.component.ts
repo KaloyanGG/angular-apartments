@@ -10,7 +10,8 @@ import { IUser } from 'src/app/shared/interfaces/user';
 })
 export class NavigationComponent {
 
-  constructor(public authService: AuthService, private apiService: ApiService) { }
+  constructor(public authService: AuthService, private apiService: ApiService) { 
+  }
   logout() {
     this.authService.logout();
   }

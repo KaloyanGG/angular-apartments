@@ -44,7 +44,6 @@ export class ProfileComponent implements OnDestroy {
 
   saveProfile(): void {
     if (this.form.invalid) { return; }
-    // console.log(this.form.value);
     this.authService.updateProfile(this.form.value as any);
     this.toggleEditMode();
   }

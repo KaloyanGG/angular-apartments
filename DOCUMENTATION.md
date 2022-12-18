@@ -13,3 +13,5 @@ In the Core module we have all components that are main part of the application.
 In the Shared module, you can see the interfaces for the data coming from Firebase, and a validator for the password.
 
 In the main folder, there are the services for the authentication and the connection to the Firebase database.
+
+Moreover, the app is deployed in firebase, and the AuthService is initialized at the start of the application.

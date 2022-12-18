@@ -11,8 +11,8 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        component: PublicHomeComponent
-        // canActivate: [NonauthGuard]
+        component: PublicHomeComponent,
+        canActivate: [NonauthGuard]
     },
     {
         path: 'apartments',

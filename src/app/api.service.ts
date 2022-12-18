@@ -49,7 +49,6 @@ export class ApiService {
         rentals.push({ ...doc.data(), id: doc.id } as IRental);
       });
       this.allRentals.next(rentals);
-      // console.log(rentals);
 
     });
 
@@ -80,19 +79,6 @@ export class ApiService {
     });
   }
 
-  // loadCommentsOfApartment(apartmentId: number) {
-  //   this.allComments.pipe(map((coms) => {
-  //     return coms.filter((com) => com.apartmentId === apartmentId);
-  //   })).subscribe((coms) => {
-  //     this.currentComments.next(coms);
-
-  //   });
-  //   // this.currentComments.subscribe((coms) => {
-  //   //   console.log('all comments for this ap: ');
-  //   //   console.log(coms);
-  //   // })
-
-  // }
 
   addComment(content: string) {
 
@@ -122,7 +108,6 @@ export class ApiService {
   }
 
   unrent(rentId: string, apartmentId: number) {
-    // console.log(rentId);
     deleteDoc(doc(this.afs, 'rentals', rentId)).then(() => {
       this.loadAllRentals();
     }).then(() => {

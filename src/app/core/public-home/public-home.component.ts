@@ -12,12 +12,13 @@ export class PublicHomeComponent {
   user = null;
   constructor(public authService: AuthService,
     private router: Router) {
-    this.authService.user.subscribe(user => {
-      this.user = user as any;
-      if (this.user) {
-        this.router.navigate(['/apartments']);
-      }
-    });
+
+    // this.authService.user.subscribe(user => {
+    //   this.user = user as any;
+    //   if (this.user) {
+    //     this.router.navigate(['/apartments']);
+    //   }
+    // });
 
   }
 

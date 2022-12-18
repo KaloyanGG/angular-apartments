@@ -18,19 +18,34 @@ export class AuthService {
 
   public user = new BehaviorSubject<undefined | null | IUser>(null);
 
-  constructor(public afs: Firestore, public afAuth: Auth, public router: Router) {
-    onAuthStateChanged(this.afAuth, (user) => {
-      if (user) {
-        getDoc(doc(this.afs, 'users', user.uid)).then((doc) => {
-          if (doc.exists()) {
-            this.user.next(doc.data() as IUser);
-          }
-        });
 
-      } else {
-        this.user.next(null);
-      }
-    });
+  initialize(): Promise<any> {
+    return new Promise((resolve) => {
+      // Fetch data from an API or do some other asynchronous task      
+      onAuthStateChanged(this.afAuth, (user) => {
+        if (user) {
+          getDoc(doc(this.afs, 'users', user.uid)).then((doc) => {
+            if (doc.exists()) {
+              this.user.next(doc.data() as IUser);
+              resolve('initialized');
+            }
+          });
+  
+        } else {
+          this.user.next(null);
+          resolve('initialized');
+        }
+        
+
+      });
+      
+    }); 
+  }
+
+
+
+  constructor(public afs: Firestore, public afAuth: Auth, public router: Router) {
+    
 
 
   }
@@ -73,7 +88,6 @@ export class AuthService {
           tel: user.tel
 
         })
-        // this.setUserData(user);
       })
       .catch((error) => {
         console.error(error.message);
@@ -97,4 +111,8 @@ export class AuthService {
     });
   }
 
+}
+
+export function initializeMyService(myService: AuthService) {
+  return () => myService.initialize();
 }
